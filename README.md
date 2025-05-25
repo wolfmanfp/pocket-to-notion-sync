@@ -37,13 +37,16 @@ go build -o pocket-to-notion-sync
 > Set environment variables:
     
 >  ```bash    
->   export POCKET_API_TOKEN=your_pocket_api_token
->   export NOTION_API_TOKEN=your_notion_api_token
+>   export POCKET_CONSUMER_KEY=your_pocket_api_token
+>   export NOTION_KEY=your_notion_api_token
  
 > Or create a `.env` file with the above variables.
 
 Then just run this command:
 `./pocket-to-notion-sync`
+
+Or run it with an optional `notion-db` flag:
+`./pocket-to-notion-sync --notion-db=your_notion_database_id`
 
 ## Roadmap
 
