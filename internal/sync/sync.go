@@ -58,7 +58,12 @@ func (s *Syncer) Sync() error {
 			tags = append(tags, tag)
 		}
 
-		err = s.notionClient.CreatePage(title, article.ResolvedURL, article.Excerpt, tags)
+		cover := ""
+		if len(article.Images) > 0 {
+			cover = article.Images["1"]["src"].(string)
+		}
+
+		err = s.notionClient.CreatePage(title, article.ResolvedURL, article.Excerpt, tags, cover)
 		if err != nil {
 			log.Printf("\nError creating Notion page for article %s: %v", title, err)
 		} else {

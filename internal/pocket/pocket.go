@@ -45,7 +45,8 @@ func (c *Client) authenticate() error {
 func (c *Client) GetArticles() ([]api.Item, error) {
 	client := api.NewClient(c.consumerKey, c.accessToken)
 	options := &api.RetrieveOption{
-		State: api.StateAll,
+		State:      api.StateAll,
+		DetailType: api.DetailTypeComplete,
 	}
 
 	result, err := client.Retrieve(options)

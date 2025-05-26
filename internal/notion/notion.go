@@ -35,7 +35,7 @@ func (c *Client) ArticleExists(url string) (bool, error) {
 	return len(resp.Results) > 0, nil
 }
 
-func (c *Client) CreatePage(title, url, excerpt string, tags []string) error {
+func (c *Client) CreatePage(title, url, excerpt string, tags []string, cover string) error {
 	pageCreateRequest := &notionapi.PageCreateRequest{
 		Parent: notionapi.Parent{
 			Type:       notionapi.ParentTypeDatabaseID,
@@ -56,6 +56,26 @@ func (c *Client) CreatePage(title, url, excerpt string, tags []string) error {
 				URL: url,
 			},
 		},
+	}
+
+	if cover != "" {
+		pageCreateRequest.Children = append(pageCreateRequest.Children, notionapi.ImageBlock{
+			BasicBlock: notionapi.BasicBlock{
+				Object: "block",
+				Type:   "image",
+			},
+			Image: notionapi.Image{
+				External: &notionapi.FileObject{
+					URL: cover,
+				},
+			},
+		})
+
+		pageCreateRequest.Cover = &notionapi.Image{
+			External: &notionapi.FileObject{
+				URL: cover,
+			},
+		}
 	}
 
 	if excerpt != "" {
