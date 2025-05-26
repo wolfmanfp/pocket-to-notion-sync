@@ -55,7 +55,9 @@ func (c *Client) GetArticles() ([]api.Item, error) {
 
 	var articles []api.Item
 	for _, item := range result.List {
-		articles = append(articles, item)
+		if item.Status != api.ItemStatusDeleted {
+			articles = append(articles, item)
+		}
 	}
 
 	return articles, nil
