@@ -42,7 +42,7 @@ func (c *Client) CreatePage(title, url, excerpt string, tags []string) error {
 			DatabaseID: notionapi.DatabaseID(c.databaseID),
 		},
 		Properties: notionapi.Properties{
-			"Title": notionapi.TitleProperty{
+			"Name": notionapi.TitleProperty{
 				Title: []notionapi.RichText{
 					{
 						Type: notionapi.ObjectTypeText,
@@ -59,16 +59,22 @@ func (c *Client) CreatePage(title, url, excerpt string, tags []string) error {
 	}
 
 	if excerpt != "" {
-		pageCreateRequest.Properties["Excerpt"] = notionapi.RichTextProperty{
-			RichText: []notionapi.RichText{
-				{
-					Type: notionapi.ObjectTypeText,
-					Text: &notionapi.Text{
-						Content: excerpt,
+		pageCreateRequest.Children = append(pageCreateRequest.Children, notionapi.ParagraphBlock{
+			BasicBlock: notionapi.BasicBlock{
+				Object: "block",
+				Type:   "paragraph",
+			},
+			Paragraph: notionapi.Paragraph{
+				RichText: []notionapi.RichText{
+					{
+						Type: notionapi.ObjectTypeText,
+						Text: &notionapi.Text{
+							Content: excerpt,
+						},
 					},
 				},
 			},
-		}
+		})
 	}
 
 	if len(tags) > 0 {
