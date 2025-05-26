@@ -31,7 +31,7 @@ Before we begin, you'll need the following:
 
 If you don't have these, here's how to get them:
 
-- Pocket Consumer Key: Create an app at https://getpocket.com/developer/
+- Pocket Consumer Key: Create an app at https://getpocket.com/developer/apps/new
 - Notion Integration Token: Create an integration at https://www.notion.so/my-integrations
 - Notion Database ID: Create a database in Notion and copy its ID from the URL
 
