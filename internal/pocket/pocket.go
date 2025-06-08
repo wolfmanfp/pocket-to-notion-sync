@@ -44,21 +44,27 @@ func (c *Client) authenticate() error {
 
 func (c *Client) GetArticles() ([]api.Item, error) {
 	client := api.NewClient(c.consumerKey, c.accessToken)
-	options := &api.RetrieveOption{
-		State:      api.StateAll,
-		DetailType: api.DetailTypeComplete,
-	}
-
-	result, err := client.Retrieve(options)
-	if err != nil {
-		return nil, err
-	}
-
 	var articles []api.Item
-	for _, item := range result.List {
-		if item.Status != api.ItemStatusDeleted {
-			articles = append(articles, item)
+
+	for i := 0; i < 3; i++ {
+		options := &api.RetrieveOption{
+			State:      api.StateAll,
+			DetailType: api.DetailTypeComplete,
+			Sort:       api.SortNewest,
+			Offset:     i * 30,
 		}
+
+		result, err := client.Retrieve(options)
+		if err != nil {
+			return nil, err
+		}
+
+		for _, item := range result.List {
+			if item.Status != api.ItemStatusDeleted {
+				articles = append(articles, item)
+			}
+		}
+
 	}
 
 	return articles, nil
