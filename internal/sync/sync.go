@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"strings"
+	"time"
 
 	"github.com/BahaBoualii/potion/internal/notion"
 	"github.com/BahaBoualii/potion/internal/pocket"
@@ -63,7 +64,7 @@ func (s *Syncer) Sync() error {
 			cover = article.Images["1"]["src"].(string)
 		}
 
-		err = s.notionClient.CreatePage(title, article.ResolvedURL, article.Excerpt, tags, cover)
+		err = s.notionClient.CreatePage(title, article.ResolvedURL, article.Excerpt, tags, cover, time.Time(article.TimeAdded))
 		if err != nil {
 			log.Printf("\nError creating Notion page for article %s: %v", title, err)
 		} else {

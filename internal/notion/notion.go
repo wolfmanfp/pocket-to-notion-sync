@@ -3,6 +3,7 @@ package notion
 import (
 	"context"
 	"fmt"
+	"time"
 
 	"github.com/jomei/notionapi"
 )
@@ -35,7 +36,8 @@ func (c *Client) ArticleExists(url string) (bool, error) {
 	return len(resp.Results) > 0, nil
 }
 
-func (c *Client) CreatePage(title, url, excerpt string, tags []string, cover string) error {
+func (c *Client) CreatePage(title, url, excerpt string, tags []string, cover string, added time.Time) error {
+	addedDate := notionapi.Date(added)
 	pageCreateRequest := &notionapi.PageCreateRequest{
 		Parent: notionapi.Parent{
 			Type:       notionapi.ParentTypeDatabaseID,
@@ -54,6 +56,13 @@ func (c *Client) CreatePage(title, url, excerpt string, tags []string, cover str
 			},
 			"URL": notionapi.URLProperty{
 				URL: url,
+			},
+			"Added": notionapi.DateProperty{
+				Type: notionapi.PropertyTypeDate,
+				Date: &notionapi.DateObject{
+					Start: &addedDate,
+					End:   nil,
+				},
 			},
 		},
 	}

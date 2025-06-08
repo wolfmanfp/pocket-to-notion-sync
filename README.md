@@ -32,9 +32,10 @@ cd pocket-to-notion-sync
 go mod tidy 
 go build -o pocket-to-notion-sync
 ```
+- Create a new date property in your Notion database called `Added`.
 
-> **Note**
-> Set environment variables:
+> **Note**  
+> Set environment variables:  
     
 >  ```bash    
 >   export POCKET_CONSUMER_KEY=your_pocket_api_token
@@ -42,10 +43,10 @@ go build -o pocket-to-notion-sync
  
 > Or create a `.env` file with the above variables.
 
-Then just run this command:
+Then just run this command:  
 `./pocket-to-notion-sync`
 
-Or run it with an optional `notion-db` flag:
+Or run it with an optional `notion-db` flag:  
 `./pocket-to-notion-sync --notion-db=your_notion_database_id`
 
 ## Roadmap
